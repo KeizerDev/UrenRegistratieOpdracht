@@ -7,7 +7,7 @@ composer install
     
 ##how to run
 ```
-php -S 0.0.0.0:8080 -t web
+php -S 0.0.0.0:1337 -t web
 ```
 
 (@keizerdev sucks)
