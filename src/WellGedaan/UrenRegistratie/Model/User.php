@@ -37,7 +37,6 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $roles = array();
 
-
     /**
      * @Column(type="string")
      */

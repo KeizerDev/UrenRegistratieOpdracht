@@ -1,0 +1,49 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--6dp">
+
+            <div class="mdl-card__title setting-heading">
+                <h2 class="mdl-card__title-text margin-auto">Nieuwe uren registratie</h2>
+            </div>
+
+            <div class="mdl-color--red mdl-color-text--white textCenter">
+                {% set errors = app.session.getFlashBag.get('errors') %}
+                {% if errors is not empty  %}
+                    {% for error in errors[0] %}
+                        <ol>{{ error.propertyPath }} - {{ error.message }}</ol>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <form action="{{ app.url_generator.generate('hourregistration.new.post') }}" method="post" class="setting-form">
+                <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input font14"  name="_day" type="date" />
+                    <label class="mdl-textfield__label font14" for="passin">Dag</label>
+                </div>
+
+                <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input font14" name="_start" type="time" />
+                    <label class="mdl-textfield__label font14" for="passin">Begin tijd</label>
+                </div>
+
+                <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input font14" name="_end" type="time" />
+                    <label class="mdl-textfield__label font14" for="passin">Eind tijd</label>
+                </div>
+
+                <div class="mdl-card__actions textCenter">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect loginButton">
+                        Registreer uren
+                    </button>
+                </div>
+
+            </form>
+
+
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+    </div>
+{% endblock body %}

@@ -5,6 +5,7 @@ use Doctrine\ORM\EntityManager;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use WellGedaan\UrenRegistratie\Manager\UserManager;
@@ -62,7 +63,7 @@ class SecurityController extends BaseController implements ControllerProviderInt
      */
     public function renderLoginPage(Application $app)
     {
-        //$this->initDoctrine($app['orm.em']);
+        $this->initDoctrine($app['orm.em']);
         return $this->render('security/login.twig');
     }
 
@@ -99,7 +100,7 @@ class SecurityController extends BaseController implements ControllerProviderInt
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        return new Response("WOW");
+        return new RedirectResponse("/security/login");
     }
 
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Uren Registratie</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/mdl/material.min.css">
+    <link rel="stylesheet" href="/assets/fa/css/font-awesome.min.css">
+    <script src="/assets/jq/jq.js"></script>
+    <script src="/assets/mdl/material.js"></script>
+    <script src="/assets/mdl/datepicker.js"></script>
+    <script src="/assets/moment/moment.min.js"></script>
+    <script src="/assets/js/script.js"></script>
+</head>
+
+<body class="dashboardHome" id="dashfade">
+<div class="mdl-grid" id="dashwall">
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+    <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--6dp">
+
+        <div class="mdl-card__title">
+            <h3 class="mdl-card__title-text">Welkom terug, {{ app.user.getFirstName }} {{ app.user.getLastName }}!</h3>
+        </div>
+
+        <div class="mdl-card__supporting-text mdl-grid">
+            <a href="/" class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone mdl-shadow--2dp naviTile noselect">
+                <h6>
+                    <i class="fa fa-envelope-o naviTileIcon"></i></br>Mijn uren
+                </h6>
+            </a>
+            <a href="#" class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone mdl-shadow--2dp naviTile noselect">
+                <h6>
+                    <i class="fa fa-cog naviTileIcon"></i></br>Instellingen
+                </h6>
+            </a>
+            <a href="/security/logout" class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone mdl-shadow--2dp naviTile noselect">
+                <h6>
+                    <i class="fa fa-sign-out naviTileIcon"></i></br>Logout
+                </h6>
+            </a>
+        </div>
+
+    </div>
+    <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+</div>
+{% block body %}
+{% endblock body %}
+</body>
+
+</html>

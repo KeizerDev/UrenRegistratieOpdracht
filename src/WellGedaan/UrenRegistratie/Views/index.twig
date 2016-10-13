@@ -1,1 +1,64 @@
-HERRO index
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--6dp">
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="mdl-card__title setting-heading">
+                <h2 class="mdl-card__title-text margin-auto">Recente uren registraties</h2>
+            </div>
+            {% endif %}
+
+            <div class="mdl-card__title">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp websiteOverview">
+                    <thead>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th class="mdl-data-table__cell--non-numeric">Gebruiker</th>
+                    {% endif %}
+                    <th class="mdl-data-table__cell--non-numeric">Dag</th>
+                    <th class="mdl-data-table__cell--non-numeric">Begin tijd</th>
+                    <th class="mdl-data-table__cell--non-numeric">Eind tijd</th>
+                    </thead>
+                    <tbody>
+                        {% for registration in registrations %}
+                        <tr class="rowClickable">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <td class="mdl-data-table__cell--non-numeric">
+                                    {{ registration.user.username}}
+                                </td>
+                            {% endif %}
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{ registration.day | date("d-m-Y") }}
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{ registration.startingTime | date("G:i") }}
+                            </td>
+                            <td class="mdl-data-table__cell--non-numeric">
+                                {{ registration.endTime | date("G:i") }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mdl-card__actions mdl-card--border padding16">
+                <a href="{{ app.url_generator.generate('hourregistration.new') }}" id="newWeb">
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect themeDarkBlue">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+                <!--<div class="floatRight">
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect themeDarkBlue">
+                        <i class="fa fa-arrow-left"></i>
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-js-ripple-effect themeDarkBlue">
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+                </div> -->
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+    </div>
+{% endblock body %}

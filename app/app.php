@@ -43,6 +43,7 @@ $app->register(new \Silex\Provider\SecurityServiceProvider(), array(
                 'login_path' => '/security/login',
                 'check_path' => '/security/login_check',
             ),
+            'logout' => array('logout_path' => '/security/logout'),
             'users' => function ($app) {
                 return $app['UserManager'];
             },
@@ -66,7 +67,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 
-$app->mount('', new \WellGedaan\UrenRegistratie\Controller\PageController($app['twig']));
+$app->mount('', new \WellGedaan\UrenRegistratie\Controller\PageController($app['twig'], $app['orm.em']));
 $app->mount('/security', new \WellGedaan\UrenRegistratie\Controller\SecurityController($app['twig'], $app['UserManager'], $app['orm.em']));
 
 return $app;
