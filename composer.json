@@ -1,0 +1,22 @@
+{
+    "name": "dennis/uren-registratie-opdracht",
+    "authors": [
+        {
+            "name": "Dennis Snijder",
+            "email": "Dennissnijder97@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "WellGedaan\\UrenRegistratie\\": "src/WellGedaan/UrenRegistratie/"
+        }
+    },
+    "require": {
+        "twig/twig": "~1.0",
+        "silex/silex": "~2.0",
+        "doctrine/dbal": "~2.4",
+        "symfony/twig-bridge": "^3.0",
+        "dflydev/doctrine-orm-service-provider": "^2.0",
+        "symfony/security": "~3.1"
+    }
+}
