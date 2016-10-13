@@ -1,11 +1,11 @@
 <?php
-namespace  WellGedaan\UrenRegistratie\Controller;
+namespace WellGedaan\UrenRegistratie\Controller;
 
 /**
  * Class BaseController
  * @package WellGedaan\UrenRegistratie\Controller
  */
-class BaseController 
+class BaseController
 {
     /**
      * @var \Twig_Environment

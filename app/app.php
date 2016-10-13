@@ -67,6 +67,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 
 
 $app->mount('', new \WellGedaan\UrenRegistratie\Controller\PageController($app['twig']));
-$app->mount('/security', new \WellGedaan\UrenRegistratie\Controller\SecurityController($app['twig']));
+$app->mount('/security', new \WellGedaan\UrenRegistratie\Controller\SecurityController($app['twig'], $app['UserManager'], $app['orm.em']));
 
 return $app;

@@ -2,6 +2,7 @@
 namespace WellGedaan\UrenRegistratie\Model;
 
 use DateTime;
+use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -15,11 +16,6 @@ class User implements AdvancedUserInterface, \Serializable
      * @Column(type="integer") @GeneratedValue
      */
     protected $id;
-
-    /**
-     * @Column(type="string")
-     */
-    protected $email;
 
     /**
      * @Column(type="string")
@@ -65,14 +61,16 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Constructor.
      *
-     * @param string $email
+     * @param string $username
      */
-    public function __construct($email)
+    public function __construct($username)
     {
-        $this->email = $email;
-        $this->timeCreated = time();
+        $this->username = $username;
+        $this->timeCreated = new DateTime();
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->setEnabled(true);
     }
+
     /**
      * Checks whether the user's account has expired.
      *
@@ -87,6 +85,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return true;
     }
+
     /**
      * Checks whether the user is locked.
      *
@@ -101,6 +100,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return true;
     }
+
     /**
      * Checks whether the user's credentials (password) has expired.
      *
@@ -115,6 +115,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return true;
     }
+
     /**
      * Checks whether the user is enabled.
      *
@@ -129,6 +130,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->enabled;
     }
+
     /**
      * @param boolean $enabled
      */
@@ -136,6 +138,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->enabled = $enabled;
     }
+
     /**
      * String representation of object
      * @link http://php.net/manual/en/serializable.serialize.php
@@ -148,6 +151,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
         ));
     }
+
     /**
      * Constructs the object
      * @link http://php.net/manual/en/serializable.unserialize.php
@@ -163,6 +167,7 @@ class User implements AdvancedUserInterface, \Serializable
             $this->id,
             ) = unserialize($serialized);
     }
+
     /**
      * Returns the roles granted to the user.
      *
@@ -186,6 +191,7 @@ class User implements AdvancedUserInterface, \Serializable
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
+
     /**
      * Returns the password used to authenticate the user.
      *
@@ -198,6 +204,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->password;
     }
+
     /**
      * Returns the salt that was originally used to encode the password.
      *
@@ -209,6 +216,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->salt;
     }
+
     /**
      * Returns the username used to authenticate the user.
      *
@@ -218,6 +226,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->username;
     }
+
     /**
      * Removes sensitive data from the user.
      *
@@ -227,6 +236,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function eraseCredentials()
     {
     }
+
     /**
      * @return int
      */
@@ -234,6 +244,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->id;
     }
+
     /**
      * @param int $id
      */
@@ -241,20 +252,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->id = $id;
     }
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
+
     /**
      * @param string $password
      * @return User
@@ -264,6 +262,7 @@ class User implements AdvancedUserInterface, \Serializable
         $this->password = $password;
         return $this;
     }
+
     /**
      * @param array $roles
      */
@@ -271,6 +270,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->roles = $roles;
     }
+
     /**
      * @return string
      */
@@ -278,6 +278,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->first_name;
     }
+
     /**
      * @param string $first_name
      */
@@ -285,6 +286,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->first_name = $first_name;
     }
+
     /**
      * @return string
      */
@@ -292,6 +294,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->last_name;
     }
+
     /**
      * @param string $last_name
      */
@@ -299,6 +302,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->last_name = $last_name;
     }
+
     /**
      * @return DateTime
      */
@@ -306,6 +310,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return $this->timeCreated;
     }
+
     /**
      * @param DateTime $timeCreated
      */
@@ -313,6 +318,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->timeCreated = $timeCreated;
     }
+
     /**
      * @param string $username
      */
@@ -320,6 +326,7 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->username = $username;
     }
+
     /**
      * @param string $salt
      */

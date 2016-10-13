@@ -5,6 +5,10 @@ use Doctrine\ORM\EntityManager;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use WellGedaan\UrenRegistratie\Manager\UserManager;
+use WellGedaan\UrenRegistratie\Model\User;
 
 /**
  * Class SecurityController
@@ -12,6 +16,23 @@ use Silex\ControllerCollection;
  */
 class SecurityController extends BaseController implements ControllerProviderInterface
 {
+
+
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+    /**
+     * @var EntityManager
+     */
+    private $entityManager;
+
+    public function __construct(\Twig_Environment $twig, UserManager $userManager, EntityManager $entityManager)
+    {
+        parent::__construct($twig);
+        $this->userManager = $userManager;
+        $this->entityManager = $entityManager;
+    }
 
     /**
      * Returns routes to connect to the given application.
@@ -27,6 +48,8 @@ class SecurityController extends BaseController implements ControllerProviderInt
 
         $controllers->get('/login', [$this, 'renderLoginPage']);
         $controllers->get('/register', [$this, 'renderRegisterPage']);
+
+        $controllers->post('/register_check', [$this, 'registerUserFromRequest']);
 
         return $controllers;
     }
@@ -51,6 +74,32 @@ class SecurityController extends BaseController implements ControllerProviderInt
     public function renderRegisterPage()
     {
         return $this->render('security/register.twig');
+    }
+
+
+    /**
+     * handles the register request
+     * @param Request $request
+     * @return Response
+     */
+    public function registerUserFromRequest(Request $request)
+    {
+        $username = $request->get('_username');
+        $password = $request->get('_password');
+        $firstName = $request->get('_first_name');
+        $lastName = $request->get('_last_name');
+
+
+        /** @var User */
+        $user = new User($username);
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+        $this->userManager->setUserPassword($user, $password);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return new Response("WOW");
     }
 
 

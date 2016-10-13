@@ -1,7 +1,6 @@
 <?php
 namespace WellGedaan\UrenRegistratie\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 use Silex\ControllerCollection;
@@ -31,7 +30,6 @@ class PageController extends BaseController implements ControllerProviderInterfa
     {
         return $this->render('index.twig');
     }
-
 
 
 }

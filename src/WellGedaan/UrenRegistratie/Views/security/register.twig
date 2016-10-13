@@ -13,18 +13,28 @@
                 <form action="/security/register_check" method="post">
                     <div class="mdl-card__supporting-text loginInputWrapper ">
                         <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input font14" name="_username" type="text" id="userin" />
+                            <input class="mdl-textfield__input font14" name="_username" type="text" id="userin"/>
                             <label class="mdl-textfield__label font14" for="userin">Username</label>
                         </div>
-                        <label id="invalidUser"></label>
                         <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input font14" name="_password" type="password" id="passin"/>
                             <label class="mdl-textfield__label font14" for="passin">Password</label>
                         </div>
-                        <label id="invalidPass"></label>
-                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect font14 marginTop20" for="checkbox-2">
-                            <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input font14" />
-                            <span class="mdl-checkbox__label font14">Remember <i class="fa fa-lock paddingLeft10"></i></span>
+
+                        <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input font14" name="_first_name" type="text" id="userin"/>
+                            <label class="mdl-textfield__label font14" for="userin">Voornaam</label>
+                        </div>
+                        <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input font14" name="_last_name" type="text" id="userin"/>
+                            <label class="mdl-textfield__label font14" for="userin">Achternaam</label>
+                        </div>
+
+                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect font14 marginTop20"
+                               for="checkbox-2">
+                            <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input font14"/>
+                            <span class="mdl-checkbox__label font14">Remember <i
+                                        class="fa fa-lock paddingLeft10"></i></span>
                         </label>
                     </div>
                     <div class="mdl-card__actions mdl-card--border textCenter">

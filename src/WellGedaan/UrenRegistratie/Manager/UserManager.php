@@ -1,5 +1,6 @@
 <?php
 namespace WellGedaan\UrenRegistratie\Manager;
+
 use Doctrine\ORM\EntityManager;
 use Silex\Application;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -35,6 +36,7 @@ class UserManager implements UserProviderInterface
         $this->entityManager = $app['orm.em'];
 
     }
+
     /**
      * Loads the user for the given username or email address.
      *
@@ -76,6 +78,7 @@ class UserManager implements UserProviderInterface
         }
         return $this->getUser($user->getId());
     }
+
     /**
      * Whether this provider supports the given user class
      *
@@ -84,93 +87,9 @@ class UserManager implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return ($class === 'WellGedaan\LeadDash\Model\User');
+        return ($class === 'WellGedaan\UrenRegistratie\Model\User');
     }
-    /**
-     * Factory method for creatin   g a new User instance.
-     *
-     * @param array $data
-     * @return User
-     */
-    public function createUser($data = array())
-    {
-        /** @var User */
-        $user = new User($data['email']);
-        $user->setUsername($data['username']);
-        $user->setFirstName($data['first_name']);
-        $user->setLastName($data['last_name']);
-        $this->setUserPassword($user, $data['password']);
-        return $user;
 
-    }
-    /**
-     * Get the password encoder to use for the given user object.
-     *
-     * @param UserInterface $user
-     * @return PasswordEncoderInterface
-     */
-    protected function getEncoder(UserInterface $user)
-    {
-        return $this->app['security.encoder_factory']->getEncoder($user);
-    }
-    /**
-     * Encode a plain text password for a given user. Hashes the password with the given user's salt.
-     *
-     * @param User $user
-     * @param string $password A plain text password.
-     * @return string An encoded password.
-     */
-    public function encodeUserPassword(User $user, $password)
-    {
-        $encoder = $this->getEncoder($user);
-        return $encoder->encodePassword($password, $user->getSalt());
-    }
-    /**
-     * Encode a plain text password and set it on the given User object.
-     *
-     * @param User $user
-     * @param string $password A plain text password.
-     */
-    public function setUserPassword(User $user, $password)
-    {
-        $user->setPassword($this->encodeUserPassword($user, $password));
-    }
-    /**
-     * Test whether a given plain text password matches a given User's encoded password.
-     *
-     * @param User $user
-     * @param string $password
-     * @return bool
-     */
-    public function checkUserPassword(User $user, $password)
-    {
-        return $user->getPassword() === $this->encodeUserPassword($user, $password);
-    }
-    /**
-     * Get a User instance for the currently logged in User, if any.
-     *
-     * @return UserInterface|null
-     */
-    public function getCurrentUser()
-    {
-        if ($this->isLoggedIn()) {
-            return $this->app['security']->getToken()->getUser();
-        }
-        return null;
-    }
-    /**
-     * Test whether the current user is authenticated.
-     *
-     * @return boolean
-     */
-    function isLoggedIn()
-    {
-        $token = $this->app['security']->getToken();
-        if (null === $token) {
-            return false;
-        }
-        return $this->app['security']->isGranted('IS_AUTHENTICATED_REMEMBERED');
-    }
     /**
      * Get a User instance by its ID.
      *
@@ -188,14 +107,107 @@ class UserManager implements UserProviderInterface
     }
 
     /**
+     * Factory method for creatin   g a new User instance.
+     *
+     * @param array $data
+     * @return User
+     */
+    public function createUser($data = array())
+    {
+        /** @var User */
+        $user = new User($data['email']);
+        $user->setUsername($data['username']);
+        $user->setFirstName($data['first_name']);
+        $user->setLastName($data['last_name']);
+        $this->setUserPassword($user, $data['password']);
+        return $user;
+
+    }
+
+    /**
+     * Encode a plain text password and set it on the given User object.
+     *
+     * @param User $user
+     * @param string $password A plain text password.
+     */
+    public function setUserPassword(User $user, $password)
+    {
+        $user->setPassword($this->encodeUserPassword($user, $password));
+    }
+
+    /**
+     * Encode a plain text password for a given user. Hashes the password with the given user's salt.
+     *
+     * @param User $user
+     * @param string $password A plain text password.
+     * @return string An encoded password.
+     */
+    public function encodeUserPassword(User $user, $password)
+    {
+        $encoder = $this->getEncoder($user);
+        return $encoder->encodePassword($password, $user->getSalt());
+    }
+
+    /**
+     * Get the password encoder to use for the given user object.
+     *
+     * @param UserInterface $user
+     * @return PasswordEncoderInterface
+     */
+    protected function getEncoder(UserInterface $user)
+    {
+        return $this->app['security.encoder_factory']->getEncoder($user);
+    }
+
+    /**
+     * Test whether a given plain text password matches a given User's encoded password.
+     *
+     * @param User $user
+     * @param string $password
+     * @return bool
+     */
+    public function checkUserPassword(User $user, $password)
+    {
+        return $user->getPassword() === $this->encodeUserPassword($user, $password);
+    }
+
+    /**
+     * Get a User instance for the currently logged in User, if any.
+     *
+     * @return UserInterface|null
+     */
+    public function getCurrentUser()
+    {
+        if ($this->isLoggedIn()) {
+            return $this->app['security']->getToken()->getUser();
+        }
+        return null;
+    }
+
+    /**
+     * Test whether the current user is authenticated.
+     *
+     * @return boolean
+     */
+    function isLoggedIn()
+    {
+        $token = $this->app['security']->getToken();
+        if (null === $token) {
+            return false;
+        }
+        return $this->app['security']->isGranted('IS_AUTHENTICATED_REMEMBERED');
+    }
+
+    /**
      * Delete a User from the database.
      *
      * @param User $user
      */
     public function delete(User $user)
     {
-       //meh
+        //meh
     }
+
     /**
      * checks if a username is unique
      * @param $username
@@ -207,7 +219,7 @@ class UserManager implements UserProviderInterface
         $user = $this->entityManager->getRepository('\WellGedaan\UrenRegistratie\Model\User')->findOneBy([
             'username' => $username
         ], []);
-        if($user == null) {
+        if ($user == null) {
             return true;
         }
         return false;
