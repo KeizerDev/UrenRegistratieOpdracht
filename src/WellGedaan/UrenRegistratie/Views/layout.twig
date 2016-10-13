@@ -19,7 +19,7 @@
     <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--6dp">
 
         <div class="mdl-card__title">
-            <h3 class="mdl-card__title-text">Welkom terug, {{ app.user.getFirstName }} {{ app.user.getLastName }}!</h3>
+            <h3 class="mdl-card__title-text">Welkom terug, {{ app.user.getFirstName | capitalize }} {{ app.user.getLastName | capitalize }}!</h3>
         </div>
 
         <div class="mdl-card__supporting-text mdl-grid">
@@ -28,7 +28,7 @@
                     <i class="fa fa-envelope-o naviTileIcon"></i></br>Mijn uren
                 </h6>
             </a>
-            <a href="#" class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone mdl-shadow--2dp naviTile noselect">
+            <a href="{{ app.url_generator.generate('user.settings') }}" class="mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--2-col-phone mdl-shadow--2dp naviTile noselect">
                 <h6>
                     <i class="fa fa-cog naviTileIcon"></i></br>Instellingen
                 </h6>

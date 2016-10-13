@@ -1,0 +1,36 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+        <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--6dp">
+
+            <div class="mdl-card__title setting-heading">
+                <h2 class="mdl-card__title-text margin-auto">Gebruikers instellingen</h2>
+            </div>
+
+
+            <form action="{{ app.url_generator.generate('user.settings.update') }}" method="post" class="setting-form">
+                <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input font14" value="{{ app.user.getFirstName }}"  name="_first_name" type="text" />
+                    <label class="mdl-textfield__label font14" for="passin">Voornaam</label>
+                </div>
+
+                <div class="mdl-textfield loginInput mdl-js-textfield mdl-textfield--floating-label">
+                    <input class="mdl-textfield__input font14" value="{{ app.user.getLastName }}" name="_last_name" type="text" />
+                    <label class="mdl-textfield__label font14" for="passin">Achternaam</label>
+                </div>
+
+                <div class="mdl-card__actions textCenter">
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect loginButton">
+                        Update
+                    </button>
+                </div>
+
+            </form>
+
+
+        </div>
+        <div class="mdl-cell mdl-cell--2-col mdl-cell--1-col-tablet"></div>
+    </div>
+{% endblock body %}

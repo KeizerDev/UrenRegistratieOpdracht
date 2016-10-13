@@ -63,7 +63,7 @@ class SecurityController extends BaseController implements ControllerProviderInt
      */
     public function renderLoginPage(Application $app)
     {
-        $this->initDoctrine($app['orm.em']);
+       // $this->initDoctrine($app['orm.em']);
         return $this->render('security/login.twig');
     }
 
@@ -90,6 +90,8 @@ class SecurityController extends BaseController implements ControllerProviderInt
         $firstName = $request->get('_first_name');
         $lastName = $request->get('_last_name');
 
+
+        //todo: add validation for this
 
         /** @var User */
         $user = new User($username);

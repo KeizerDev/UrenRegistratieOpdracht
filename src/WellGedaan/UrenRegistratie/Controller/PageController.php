@@ -40,7 +40,10 @@ class PageController extends BaseController implements ControllerProviderInterfa
 
         $controllers->get('/', [$this, 'renderIndexPage']);
         $controllers->get('/uur-registratie/nieuw', [$this, 'renderNewHourRegistration'])->bind('hourregistration.new');
-        $controllers->post('uur-registratie/niew/post', [$this, 'newHourRegistrationFromRequest'])->bind('hourregistration.new.post');
+        $controllers->post('/uur-registratie/niew/post', [$this, 'newHourRegistrationFromRequest'])->bind('hourregistration.new.post');
+
+        $controllers->get('/instellingen', [$this, 'renderSettingsPage'])->bind('user.settings');
+        $controllers->post('/instellingen/post', [$this, 'updateSettingsFromRequest'])->bind('user.settings.update');
 
         return $controllers;
     }
@@ -94,6 +97,7 @@ class PageController extends BaseController implements ControllerProviderInterfa
         $start = $request->get('_start');
         $end = $request->get('_end');
 
+        //todo: add validation for this
 
         $hourRegistration = new HourRegistration();
         $hourRegistration->setUser($user);
@@ -105,6 +109,33 @@ class PageController extends BaseController implements ControllerProviderInterfa
         $this->entityManager->flush();
 
         return new RedirectResponse('/');
+    }
+
+
+    public function renderSettingsPage()
+    {
+        return $this->render('settings.twig');
+    }
+
+    public function updateSettingsFromRequest(Request $request, Application $app)
+    {
+        /** @var User $user */
+        $user = $app['user'];
+
+        $firstName = $request->get('_first_name');
+        $lastName = $request->get('_last_name');
+
+        $user->setFirstName($firstName);
+        $user->setLastName($lastName);
+
+
+
+        //todo: add validation for this
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+        return new RedirectResponse('/instellingen');
     }
 
 }
